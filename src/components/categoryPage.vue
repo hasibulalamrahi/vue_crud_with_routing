@@ -52,11 +52,24 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>Add Category</label>
-                                                <input type="text" class="form-control" v-model="allData" @keyup.enter="addData" />
+                                                <!-- <input type="text" class="form-control" v-model="allData" @keyup.enter="addData" /> -->
+                                                <input type="text" class="form-control" v-model="allData" />
+
                                             </div>
                                             <div align = "center">
-                                                <input type="hidden" v-model="hiddenId"/>
-                                                <!-- <input type="button" class ="btn btn-success btn-xs" v-model="actionButton" @click="addData"/> -->
+                                                <!-- <input type="hidden" v-model="hiddenId"/> -->
+                                                <div v-if="addButton">
+                                                    <button class = "btn btn-secondary" v-model="allData" @click="addData"> Add New Category</button>
+
+                                                    <!-- <input type="button" class ="btn btn-success btn-xs" v-model="actionButton" @click="addData"/> -->
+
+                                                </div>
+                                                <div v-if="editButton">
+                                                    <button class = "btn btn-secondary" v-model="EditData" @click="editData()"> Edit Category</button>
+
+                                                    <!-- <input type="button" class ="btn btn-success btn-xs" v-model="actionButton" @click="addData"/> -->
+
+                                                </div>
                                                 <!-- <input v-model="allData" @keyup.enter="addData"> -->
                                             </div>
 
@@ -105,7 +118,11 @@ export default{
             myModel:false,
             actionButton:'Insert',
             dynamicTitle:'Add Data',
-            beforeEditCache:''
+            beforeEditCache:'',
+            addButton:false,
+            editButton:false,
+            EditData:'',
+            editId:''
         }
     },
     methods:{
@@ -113,21 +130,27 @@ export default{
                 this.actionButton="Insert";
                 this.dynamicTitle="Add New Category";
                 this.myModel = true;
+                this.addButton=true;
+                this.editButton = false;
+                this.allData ='';
 
             },
             openEdit(cat){
-                console.log(cat)
-                this.actionButton="Edit";
-                // this.dynamicTitle="Edit Category";
+                
+                this.editId = cat;
+                this.dynamicTitle="Edit Category";
                 this.myModel = true;
                 this.allData = cat.name ;
+                this.editButton = true;
+                this.addButton=false;
+
             },
             addData(){
                 if(this.allData.trim().length ==0){
                     return
                 }
                 else{
-                    // console.log("Data is Submitted")
+                    console.log("Data is Submitted")
                     this.categories.push({
                         id:this.catergoryId,
                         name:this.allData
@@ -141,11 +164,28 @@ export default{
                 }
             },
             remove(index){
-                // alert("This is to be deleted");
-                // const indexs = index-1;
+                
                 this.categories.splice(index,1);
 
                  console.log(index);
+            },
+            editData(){
+                this.EditData = this.allData;
+                const ide =this.editId.id;
+                // alert("Data is edited");
+                if(this.EditData.trim().length == 0){
+                    this.myModel = false
+                }
+                
+                else{
+                    // console.log("Hello")
+                    this.categories[ide].name = this.EditData;
+                    this.myModel = false;
+                    this.editId = '';
+                }
+              
+
+
             }
 
 
