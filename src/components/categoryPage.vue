@@ -92,6 +92,7 @@
 </template>
 
 <script>
+const STORAGE_KEY = 'vue-todo-app-storage';
 export default{
     name:'category',
 
@@ -125,6 +126,9 @@ export default{
             editId:''
         }
     },
+    created(){
+        this.categories = JSON.parse(localStorage.getItem(STORAGE_KEY)|| '[]');
+    },
     methods:{
             openModel(){
                 this.actionButton="Insert";
@@ -152,13 +156,14 @@ export default{
                 else{
                     console.log("Data is Submitted")
                     this.categories.push({
-                        id:this.catergoryId,
+                        // id:this.catergoryId,
                         name:this.allData
                     })
                     console.log(this.categories);
                     this.allData=''
-                    this.catergoryId++
+                    // this.catergoryId++
                     this.myModel=false
+                    localStorage.setItem(STORAGE_KEY,JSON.stringify(this.categories));
 
 
                 }
@@ -168,6 +173,8 @@ export default{
                 this.categories.splice(index,1);
 
                  console.log(index);
+                 localStorage.setItem(STORAGE_KEY,JSON.stringify(this.categories));
+
             },
             editData(){
                 this.EditData = this.allData;
@@ -182,7 +189,10 @@ export default{
                     this.categories[ide].name = this.EditData;
                     this.myModel = false;
                     this.editId = '';
+
                 }
+                // localStorage.setItem(STORAGE_KEY,JSON.stringify(this.categories));
+
               
 
 
