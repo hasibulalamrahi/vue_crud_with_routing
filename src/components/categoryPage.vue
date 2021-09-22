@@ -99,18 +99,18 @@ export default{
     data(){
         return{
             categories:[
-                {
-                    id:0,
-                    name:"Finish learning Vue"
-                },
-                {
-                    id:1,
-                    name:"Finishing Vue CRUD Project"
-                },
-                {
-                    id:2,
-                    name:"Getting Assigned into a project"
-                },
+                // {
+                //     id:0,
+                //     name:"Finish learning Vue"
+                // },
+                // {
+                //     id:1,
+                //     name:"Finishing Vue CRUD Project"
+                // },
+                // {
+                //     id:2,
+                //     name:"Getting Assigned into a project"
+                // },
             
 
             ],

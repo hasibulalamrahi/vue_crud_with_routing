@@ -40,7 +40,7 @@
                             </svg></button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-light mr-1" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <button type="button" class="btn btn-light mr-1" @click="openEdit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
@@ -76,10 +76,13 @@
                                             <div class="form-group">
                                                 <label>Title </label>
                                                 <!-- <input type="text" class="form-control" v-model="allData" @keyup.enter="addData" /> -->
-                                                <input type="text" class="form-control"  />
+                                                <input type="text" class="form-control"  /> <br>
+
                                                 <label>Add Category</label>
-                                                <!-- <input type="text" class="form-control" v-model="allData" @keyup.enter="addData" /> -->
-                                                <input type="text" class="form-control"  />
+                                                <select >
+                                                    <option v-for="cat in categories" :key="cat.id">{{cat.name}}</option>
+
+                                                </select> <br>
                                                 <label>Post Body</label>
                                                 <!-- <input type="text" class="form-control" v-model="allData" @keyup.enter="addData" /> -->
                                                 <input type="text" class="form-control"  />
@@ -88,13 +91,13 @@
                                             <div align = "center">
                                                 <!-- <input type="hidden" v-model="hiddenId"/> -->
                                                 <div v-if="addButton">
-                                                    <button class = "btn btn-secondary" v-model="allData" @click="addData"> Add New Category</button>
+                                                    <button class = "btn btn-secondary" v-model="allData" @click="addData"> Add New Data</button>
 
                                                     <!-- <input type="button" class ="btn btn-success btn-xs" v-model="actionButton" @click="addData"/> -->
 
                                                 </div>
                                                 <div v-if="editButton">
-                                                    <button class = "btn btn-secondary" v-model="EditData" @click="editData()"> Edit Category</button>
+                                                    <button class = "btn btn-secondary" v-model="EditData" @click="editData"> Edit Data</button>
 
                                                     <!-- <input type="button" class ="btn btn-success btn-xs" v-model="actionButton" @click="addData"/> -->
 
@@ -131,16 +134,47 @@ export default{
 
     data(){
         return{
+            categories:[
+                // {
+                //     id:0,
+                //     name:"Finish learning Vue"
+                // },
+                // {
+                //     id:1,
+                //     name:"Finishing Vue CRUD Project"
+                // },
+                // {
+                //     id:2,
+                //     name:"Getting Assigned into a project"
+                // },
+            
 
+            ],
+        
+        dynamicTitle : '',
         myModel:false,
+        addButton: false,
+        allData:'',
+        editData:''
         
 
         }
     },
     methods:{
         openModel(){
+            this.dynamicTitle = "Add New Data"
             this.myModel = true;
-
+            this.addButton = true;
+            this.categories = JSON.parse(localStorage.getItem('vue-todo-app-storage'));
+            // console.log(category)
+            // this.categories.push(category);
+            console.log(this.categories);
+        },
+        openEdit(){
+            this.dynamicTitle = "Edit Data",
+            this.myModel = true;
+            this.addButton = false;
+            this.editButton = true;
         }
     }
 }
