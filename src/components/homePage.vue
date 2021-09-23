@@ -34,7 +34,7 @@
                     <tr v-for="(post,index) in posts" :key="post.index" >
                         <td>{{post.title}}</td>
                         <td>
-                            <button type="button" class="btn btn-light mr-1" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                            <button type="button" class="btn btn-light mr-1"@click="viewPostData(index)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
                             <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
                             </svg></button>
@@ -60,6 +60,7 @@
             
 
         </table>
+        <componentM v-if="viewPost" :expTitle="expTitle" :expCategory="expCategory" :expPost="expPost" v-on:closeWindow="closeModal($event)"></componentM>
         <div>
             <div v-if="myModel">.
                 <transition name="model">
@@ -130,9 +131,12 @@
 
 <script>
 const STORAGE_KEY = 'vue-post-storage';
-
+import componentM from './modalWindow.vue' ;
 export default{
     name:'home',
+    components:{
+        componentM
+    },
 
     data(){
         return{
@@ -147,7 +151,11 @@ export default{
         title:'',
         category:'',
         postBody:'',
-        editId:''
+        editId:'',
+        viewPost:false,
+        expTitle:'',
+        expCategory:'',
+        expPost:''
         
 
         }
@@ -235,6 +243,20 @@ export default{
                 console.log(index);
                 localStorage.setItem(STORAGE_KEY,JSON.stringify(this.posts));
 
+        },
+        viewPostData(index){
+            console.log(index);
+            this.expTitle =this.posts[index].title ;
+            this.expCategory =this.posts[index].category ;
+            this.expPost =this.posts[index].postBody ;
+
+
+            console.log(this.expTitle)
+
+            this.viewPost = true;
+        },
+        closeModal(val){
+            this.viewPost = val
         }
     }
 }
