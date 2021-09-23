@@ -79,8 +79,8 @@
                                                 <input type="text" class="form-control" v-model="title" /> <br>
 
                                                 <label>Add Category</label>
-                                                <select >
-                                                    <option v-for="cat in categories" :key="cat.id" v-model="category">{{cat.name}}</option>
+                                                <select v-model="category">
+                                                    <option v-for="cat in categories" :key="cat.id" >{{cat.name}}</option>
 
                                                 </select> <br>
                                                 <label>Post Body</label>
@@ -136,22 +136,7 @@ export default{
 
     data(){
         return{
-            categories:[
-                // {
-                //     id:0,
-                //     name:"Finish learning Vue"
-                // },
-                // {
-                //     id:1,
-                //     name:"Finishing Vue CRUD Project"
-                // },
-                // {
-                //     id:2,
-                //     name:"Getting Assigned into a project"
-                // },
-            
-
-            ],
+        categories:[],
         posts:[],
         allPostData:'',
         dynamicTitle : '',
@@ -235,6 +220,8 @@ export default{
                 console.log(this.editId);
                 this.posts[this.editId].title = this.title;
                 this.posts[this.editId].postBody = this.postBody;
+                this.posts[this.editId].category = this.category;
+
                 this.myModel = false;
                 this.title = '';
                 this.postBody= '';
